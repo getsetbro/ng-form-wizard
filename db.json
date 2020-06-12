@@ -1,0 +1,224 @@
+{
+    "id": "76e4592f-3ed5-448e-a31a-6a908e92058b",
+    "name": "Recommender Survey",
+    "description": "Recommender Survey",
+    "nodeRootId": "00000000-0000-0000-0000-000000000000",
+    "templateId": "00000000-0000-0000-0000-000000000000",
+    "templateVars": {},
+    "cssPath": null,
+    "version": 1,
+    "locale": "en_US",
+    "nodes": [
+      {
+        "section": "Background information",
+        "question": "What is your name?",
+        "nodeTemplateId": "c07a204b-55d6-435b-b867-e30753de675c",
+        "nodeTemplateVars": {
+          "WhyAreWeAskingThis": "We will use your name throughout the survey."
+        },
+        "nodeTemplateForm": [
+          {
+            "id": "inputUsername",
+            "class": "cssclass",
+            "type": "Input",
+            "placeholder": "Please type your name",
+            "assignToVariable": "username"
+          }
+        ],
+        "submit": {
+          "text": "Let's get started!",
+          "forwardToNode": "bdc0249d-8fd4-4601-b50e-f22e113f3d8d",
+          "nodeTemplateVars": {}
+        },
+        "id": "0a1cc14a-a15c-4333-9855-e30453b74a8d",
+        "nodeType": "Form"
+      },
+      {
+        "forwardToNode": "00000000-0000-0000-0000-000000000000",
+        "timeout": 5,
+        "text": "Welcome! ##username##!",
+        "nodeTemplateId": "00000000-0000-0000-0000-000000000000",
+        "nodeTemplateVars": {},
+        "id": "bdc0249d-8fd4-4601-b50e-f22e113f3d8d",
+        "nodeType": "Interstitial"
+      },
+      {
+        "section": "Background information",
+        "question": "What is your gender?",
+        "nodeTemplateId": "239053e7-7fb1-44c7-9127-ac2e75c29e89",
+        "nodeTemplateVars": {
+          "WhyAreWeAskingThis": "We need this info"
+        },
+        "answers": [
+          {
+            "answerId": "acf96e7e-c8ae-47b8-94e2-0281e67e6f21",
+            "text": "I am female",
+            "forwardToNode": "96ee9c94-ebeb-4ec8-a88a-78a1b7cc681d",
+            "nodeTemplateAnswerVars": {
+              "IconUrl": ""
+            },
+            "displayRules": [],
+            "scoringRules": [
+              {
+                "attribute": "Male",
+                "operator": "NeverShow",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "answerId": "c3e995e4-fe3f-48c0-a352-0c6f3f9ef279",
+            "text": "I am male",
+            "forwardToNode": "96ee9c94-ebeb-4ec8-a88a-78a1b7cc681d",
+            "nodeTemplateAnswerVars": {
+              "IconUrl": ""
+            },
+            "displayRules": [],
+            "scoringRules": []
+          },
+          {
+            "answerId": "c5ab4a90-3c5d-4900-8891-09eaf509fa54",
+            "text": "I am non binary",
+            "forwardToNode": "96ee9c94-ebeb-4ec8-a88a-78a1b7cc681d",
+            "nodeTemplateAnswerVars": {
+              "IconUrl": ""
+            },
+            "displayRules": [],
+            "scoringRules": []
+          }
+        ],
+        "id": "fe8c9056-9190-488a-979c-9843b44d12f1",
+        "nodeType": "Question"
+      },
+      {
+        "forwardToNode": "00000000-0000-0000-0000-000000000000",
+        "timeout": 5,
+        "text": "Thanks for letting me know!",
+        "nodeTemplateId": "00000000-0000-0000-0000-000000000000",
+        "nodeTemplateVars": {},
+        "id": "96ee9c94-ebeb-4ec8-a88a-78a1b7cc681d",
+        "nodeType": "Interstitial"
+      },
+      {
+        "section": "Products",
+        "question": "What product categories are you interested in?",
+        "limitMin": 1,
+        "limitMax": 3,
+        "nodeTemplateId": "3abd9d2f-0d2d-45dd-a1c1-09a13e001dc0",
+        "nodeTemplateVars": {
+          "WhyAreWeAskingThis": ""
+        },
+        "answers": [
+          {
+            "answerId": "dd8e3ff8-8f31-4b7f-9981-0a9c8770aace",
+            "text": "Energy",
+            "nodeTemplateAnswerId": "00000000-0000-0000-0000-000000000000",
+            "nodeTemplateAnswerVars": {
+              "IconUrl": ""
+            },
+            "displayRules": [],
+            "scoringRules": [
+              {
+                "attribute": "Energy",
+                "operator": "Set",
+                "value": 5
+              },
+              {
+                "attribute": "Weight Supplement",
+                "operator": "Set",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "answerId": "ac7d77bd-e858-4a74-806c-f8fb999cf6c7",
+            "text": "Weight",
+            "nodeTemplateAnswerId": "00000000-0000-0000-0000-000000000000",
+            "nodeTemplateAnswerVars": {
+              "IconUrl": ""
+            },
+            "displayRules": [],
+            "scoringRules": [
+              {
+                "attribute": "Weight Supplement",
+                "operator": "Set",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "answerId": "f6b55591-851f-447a-a404-b1c459e3d0e5",
+            "text": "Muscle",
+            "nodeTemplateAnswerId": "00000000-0000-0000-0000-000000000000",
+            "nodeTemplateAnswerVars": {
+              "IconUrl": ""
+            },
+            "displayRules": [],
+            "scoringRules": [
+              {
+                "attribute": "Lean Muscle",
+                "operator": "Set",
+                "value": 5
+              },
+              {
+                "attribute": "Brain Omega",
+                "operator": "Set",
+                "value": -2
+              }
+            ]
+          }
+        ],
+        "submit": {
+          "text": "I selected my products!",
+          "forwardToNode": "6932b9c3-c25d-4660-8f71-6045121408c1",
+          "nodeTemplateVars": {}
+        },
+        "id": "bb8eb4b4-f7fe-47e0-ad8b-f6fe1cd25dd7",
+        "nodeType": "MultipleChoice"
+      },
+      {
+        "forwardToNodeDefault": "b1f7d1ba-344e-4db9-a781-b15adf69517b",
+        "rules": [
+          {
+            "attribute": "Weight Supplement",
+            "operator": "Equal",
+            "value": 5,
+            "forwardToNode": "9c75837b-3401-4eef-9e25-eb3e50d45ea5"
+          }
+        ],
+        "id": "6932b9c3-c25d-4660-8f71-6045121408c1",
+        "nodeType": "Logic"
+      },
+      {
+        "section": "END",
+        "question": "Thanks for playing!",
+        "nodeTemplateId": "239053e7-7fb1-44c7-9127-ac2e75c29e89",
+        "nodeTemplateVars": {
+          "WhyAreWeAskingThis": ""
+        },
+        "answers": [
+          {
+            "answerId": "928ab555-d9a9-4e39-9d8d-728450a7d4e6",
+            "text": "The end",
+            "forwardToNode": "00000000-0000-0000-0000-000000000000",
+            "nodeTemplateAnswerVars": {
+              "IconUrl": ""
+            },
+            "displayRules": [],
+            "scoringRules": []
+          }
+        ],
+        "id": "b1f7d1ba-344e-4db9-a781-b15adf69517b",
+        "nodeType": "Question"
+      },
+      {
+        "forwardToNode": "00000000-0000-0000-0000-000000000000",
+        "timeout": 5,
+        "text": "Oh you like weight supplement? Me too!!! :)",
+        "nodeTemplateId": "00000000-0000-0000-0000-000000000000",
+        "nodeTemplateVars": {},
+        "id": "9c75837b-3401-4eef-9e25-eb3e50d45ea5",
+        "nodeType": "Interstitial"
+      }
+    ]
+  }

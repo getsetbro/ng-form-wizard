@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
         Welcome to {{title}}!
       </h1>
       <button routerLink="/survey">survey</button>
-      <button routerLink="/formsmanager">formsmanager</button>
+      <button routerLink="/survey/question">question</button>
       <button routerLink="">Home</button>
     </div>
     <router-outlet></router-outlet>

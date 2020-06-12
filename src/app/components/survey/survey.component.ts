@@ -1,29 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from "ngx-spinner";
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.css']
 })
 export class SurveyComponent implements OnInit {
-  emp: any;
-  constructor(
-    // private employeeService: EmployeeService,  
-    private SpinnerService: NgxSpinnerService) { }
+  name :string;
+  constructor(private router: ActivatedRoute) { }
 
-  ngOnInit() {
-    this.GetemployeeDetails();
-  }
-  GetemployeeDetails() {
-    this.SpinnerService.show();
-    // this.employeeService.GetemployeeDetails().subscribe((data: any) => {  
-    //   this.emp = data;  
-    //   console.log(this.emp);  
-    //    this.SpinnerService.hide();  
-    // });  
-    setTimeout (() => {
-      this.SpinnerService.hide();
-   }, 2000);
+  ngOnInit(): void {
+    this.router.queryParams.subscribe(params => {
+      this.name = params['name'];
+    });
   }
 
 }

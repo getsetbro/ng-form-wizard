@@ -6,22 +6,20 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from './app.component';
 
-import { SurveyComponent } from './components/survey/survey.component';
-import { HomeModule } from './components/home/home.module';
-import { FormsManagerModule } from './components/forms-manager/forms-manager.module';
+import { SurveyModule } from './components/survey/survey.module';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SurveyComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgxSpinnerModule,
-    HomeModule,
-    FormsManagerModule
+    SurveyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
