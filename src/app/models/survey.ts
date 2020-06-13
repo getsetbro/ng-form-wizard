@@ -1,7 +1,6 @@
-import { ID } from '@datorama/akita';
 
 export class Survey {
-    id: ID;
+    id: string;
     name: string;
     description: string;
     nodeRootId: string;
@@ -10,5 +9,10 @@ export class Survey {
     cssPath: string;
     version: number;
     locale: string;
-    nodes:[]
+    nodes:[{
+        question:string;
+        submit:{
+            forwardToNode:string;
+        }
+    }]
 }

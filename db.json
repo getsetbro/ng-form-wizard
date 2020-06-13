@@ -36,7 +36,7 @@
           "nodeType": "Form"
         },
         {
-          "forwardToNode": "00000000-0000-0000-0000-000000000000",
+          "forwardToNode": "fe8c9056-9190-488a-979c-9843b44d12f1",
           "timeout": 5,
           "text": "Welcome! ##username##!",
           "nodeTemplateId": "00000000-0000-0000-0000-000000000000",
@@ -93,7 +93,7 @@
           "nodeType": "Question"
         },
         {
-          "forwardToNode": "00000000-0000-0000-0000-000000000000",
+          "forwardToNode": "bb8eb4b4-f7fe-47e0-ad8b-f6fe1cd25dd7",
           "timeout": 5,
           "text": "Thanks for letting me know!",
           "nodeTemplateId": "00000000-0000-0000-0000-000000000000",
@@ -172,7 +172,7 @@
           ],
           "submit": {
             "text": "I selected my products!",
-            "forwardToNode": "6932b9c3-c25d-4660-8f71-6045121408c1",
+            "forwardToNode": "9c75837b-3401-4eef-9e25-eb3e50d45ea5",
             "nodeTemplateVars": {}
           },
           "id": "bb8eb4b4-f7fe-47e0-ad8b-f6fe1cd25dd7",
@@ -214,7 +214,7 @@
           "nodeType": "Question"
         },
         {
-          "forwardToNode": "00000000-0000-0000-0000-000000000000",
+          "forwardToNode": "b1f7d1ba-344e-4db9-a781-b15adf69517b",
           "timeout": 5,
           "text": "Oh you like weight supplement? Me too!!! :)",
           "nodeTemplateId": "00000000-0000-0000-0000-000000000000",

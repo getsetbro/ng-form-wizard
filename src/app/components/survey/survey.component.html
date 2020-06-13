@@ -1,10 +1,6 @@
 <h1>surveys</h1>
 <!-- <h1>{{name}}</h1> -->
-<div *ngFor="let survey of surveys$ | async">
-    <pre>
-        {{survey | json}}
-    </pre>
-</div>
-
-<!-- <app-question  *ngIf="name === 'question'"></app-question>
-<app-multi  *ngIf="name === 'multi'"></app-multi> -->
+<app-question  [title]='childTitle' ></app-question>
+<!-- <app-multi  *ngIf="name === 'multi'"></app-multi> -->
+<button (click)="save()">save</button>
+<pre>{{node | json}}</pre>

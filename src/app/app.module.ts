@@ -9,37 +9,24 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './components/home/home.component';
 import { SurveyComponent } from './components/Survey/survey.component';
-import { HttpMethod, NG_ENTITY_SERVICE_CONFIG, NgEntityServiceGlobalConfig } from '@datorama/akita-ng-entity-service';
-import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
-import { environment } from '../environments/environment';
+import { QuestionComponent } from './components/survey/question/question.component';
+
+// import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SurveyComponent
+    SurveyComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgxSpinnerModule,
-    AkitaNgRouterStoreModule,
-    environment.production ? [] : AkitaNgDevtools,
   ],
-  providers: [
-    // AuthGuard,
-    // {provide: NG_ENTITY_SERVICE_CONFIG,
-    //   useFactory: function() {
-    //     return {
-    //       baseUrl: 'https://jsonplaceholder.typicode.com',
-    //       httpMethods: {PUT: HttpMethod.PATCH}
-    //     } as NgEntityServiceGlobalConfig;
-    //   },
-    //   deps: []
-   // }
-],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
