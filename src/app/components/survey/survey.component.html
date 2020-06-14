@@ -1,6 +1,11 @@
 <h1>surveys</h1>
-<!-- <h1>{{name}}</h1> -->
-<app-question  [title]='childTitle' ></app-question>
-<!-- <app-multi  *ngIf="name === 'multi'"></app-multi> -->
-<button (click)="save()">save</button>
-<pre>{{node | json}}</pre>
+<section>
+<app-question *ngIf="loaded && node.nodeType === 'Question'" [info]='node' ></app-question>
+<app-multiple-choice *ngIf="loaded && node.nodeType === 'MultipleChoice'" [info]='node'></app-multiple-choice>
+<app-form *ngIf="loaded && node.nodeType === 'Form'" [info]='node'></app-form>
+<app-logic *ngIf="loaded && node.nodeType === 'Logic'" [info]='node' (next)="nodeNext($event)"></app-logic>
+<app-interstitial *ngIf="loaded && node.nodeType === 'Interstitial'" [info]='node' (next)="nodeNext($event)"></app-interstitial>
+</section>
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodePrev()">back</button>
+&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodeNext(null)" *ngIf="loaded && node.nodeType !== 'Interstitial' && node.nodeType !== 'Logic'">next</button>

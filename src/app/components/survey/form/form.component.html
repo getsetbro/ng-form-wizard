@@ -1,0 +1,6 @@
+<p>form</p>
+<h1>{{info.question}}</h1>
+<div *ngFor="let f of info.nodeTemplateForm">
+    <input class="bg-white border border-gray-300 rounded-lg py-2 px-4 appearance-none leading-normal" *ngIf="f.type === 'Input'" type="text" [placeholder]="f.placeholder" />
+</div>
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{info.submit.text}}</button>

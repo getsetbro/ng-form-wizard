@@ -1,72 +1,85 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
-import { Observable } from 'rxjs';
-import { Survey } from '../../models/survey';
-import { findIndex } from 'rxjs/operators';
+
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
-  styleUrls: ['./survey.component.css']
+  styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit {
-  name: string;
+  // name: string;
   surveys: any;
   node: any;
-  childTitle: string;
   forwardToId:'';
-  nextNodeIdx = -1;
+  loaded = false;
+  pastIds = [];
   constructor(
-    private router: ActivatedRoute,
+    // private router: ActivatedRoute,
     private surveyService: SurveyService,
   ) { }
 
   ngOnInit(): void {
-    this.router.queryParams.subscribe(params => {
-      this.name = params['name'];
-    });
+    // this.router.queryParams.subscribe(params => {this.name = params['name'];});
 
     this.surveyService.getSurveys().subscribe(surveys => {
       this.surveys = surveys;
       this.node = surveys[0].nodes[0];
-      // this.childTitle = surveys[0].nodes[0].question;
-      this.childTitle = 'hi.';
+      this.loaded = true;
     });
 
   }
 
-
-  save(): void {
+  nodeNext(ev): void {
     this.forwardToId = '';
-    this.nextNodeIdx = -1;
+
     if(this.node.nodeType === "Form"){
       this.forwardToId = this.node.submit.forwardToNode;
-    }
-    if(this.node.nodeType === "MultipleChoice"){
-      this.forwardToId = this.node.submit.forwardToNode;
-    }
-    if(this.node.nodeType === "Logic"){
-      this.forwardToId = this.node.forwardToNodeDefault;
+      this.pastIds.push(this.node.id);
+
     }
     if(this.node.nodeType === "Interstitial"){
       this.forwardToId = this.node.forwardToNode;
     }
     if(this.node.nodeType === "Question"){
       this.forwardToId = this.node.answers[0].forwardToNode;
+      this.pastIds.push(this.node.id);
+
     }
-    this.nextNodeIdx = this.surveys[0].nodes.findIndex(node => {
-      return node.id === this.forwardToId;
-    })
+    if(this.node.nodeType === "MultipleChoice"){
+      this.forwardToId = this.node.submit.forwardToNode;
+      this.pastIds.push(this.node.id);
+
+    }
+    if(this.node.nodeType === "Logic"){
+      this.forwardToId = this.node.forwardToNodeDefault;
+    }
+
     let nextNode = this.surveys[0].nodes.find(node => {
       return node.id === this.forwardToId;
     })
-    if(this.nextNodeIdx >= 0){
-      this.node = this.surveys[0].nodes[this.nextNodeIdx];
-      this.childTitle = this.surveys[0].nodes[this.nextNodeIdx].question;
+
+    if(nextNode && nextNode.nodeType){
+      this.node = nextNode;
+      console.log(this.pastIds);
     }else{
       console.log(nextNode);
     }
-    console.log(this.forwardToId);
+
+  }
+  
+  nodePrev(): void {
+    const pastId = this.pastIds[this.pastIds.length-1];
+    let prevNode = this.surveys[0].nodes.find(node => {
+      return node.id === pastId;
+    })
+
+    if(prevNode && prevNode.nodeType){
+      this.node = prevNode;
+      this.pastIds.pop();
+    }else{
+      console.log(prevNode);
+    }
 
   }
 

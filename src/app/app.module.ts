@@ -9,7 +9,11 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './components/home/home.component';
 import { SurveyComponent } from './components/Survey/survey.component';
+import { FormComponent } from './components/survey/form/form.component';
+import { LogicComponent } from './components/survey/logic/logic.component';
 import { QuestionComponent } from './components/survey/question/question.component';
+import { InterstitialComponent } from './components/survey/interstitial/interstitial.component';
+import { MultipleChoiceComponent } from './components/survey/multiple-choice/multiple-choice.component';
 
 // import { environment } from '../environments/environment';
 
@@ -18,7 +22,11 @@ import { QuestionComponent } from './components/survey/question/question.compone
     AppComponent,
     HomeComponent,
     SurveyComponent,
-    QuestionComponent
+    FormComponent,
+    LogicComponent,
+    MultipleChoiceComponent,
+    QuestionComponent,
+    InterstitialComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,15 +2,12 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <div>
-      <h1>
-        Welcome to {{title}}!
-      </h1>
-      <button routerLink="/survey">survey</button>
-      <button routerLink="">Home</button>
-    </div>
+  template: `<div class="p-8 m-8">
+      <span>Welcome to {{title}}!</span>
+      <button routerLink="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+      <button routerLink="/survey" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Survey</button>
     <router-outlet></router-outlet>
+    </div>
   `,
   styles: []
 })
