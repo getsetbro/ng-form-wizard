@@ -7,6 +7,7 @@ module.exports = {
                 options: {
                     ident: 'postcss',
                     syntax: 'postcss-scss',
+                    sourceMap: false,
                     plugins: () => [
                         require('postcss-import'),
                         require('tailwindcss'),

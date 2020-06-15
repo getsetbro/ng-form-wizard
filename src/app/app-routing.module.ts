@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SurveyComponent } from './components/Survey/survey.component';
 
+import { NotFound } from './components/notfound/notfound.component';
 
 const routes: Routes = [
   {
@@ -13,13 +14,14 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent, data: { state: 'home' }
   },
   {
     path: 'survey',
     // loadChildren: () => import('./components/survey/survey.module').then(m => m.SurveyModule)
-    component: SurveyComponent,
-}
+    component: SurveyComponent, data: { state: 'survey' }
+},
+{ path: '**', component: NotFound }
 ];
 
 @NgModule({

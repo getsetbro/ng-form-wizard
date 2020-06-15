@@ -8,6 +8,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from './app.component';
 
+import { NotFound } from './components/notfound/notfound.component';
 import { HomeComponent } from './components/home/home.component';
 import { SurveyComponent } from './components/Survey/survey.component';
 import { FormComponent } from './components/survey/form/form.component';
@@ -21,6 +22,7 @@ import { MultipleChoiceComponent } from './components/survey/multiple-choice/mul
 @NgModule({
   declarations: [
     AppComponent,
+    NotFound,
     HomeComponent,
     SurveyComponent,
     FormComponent,
