@@ -1,0 +1,22 @@
+<section>
+    <h1>quiz</h1>
+
+        <!-- <app-question *ngIf="loaded && node.nodeType === 'Question'" [info]='node' ></app-question> -->
+        <!-- <app-multiple-choice *ngIf="loaded && node.nodeType === 'MultipleChoice'" [info]='node'></app-multiple-choice> -->
+        <!-- <app-form *ngIf="loaded && node.nodeType === 'Form'" [info]='node'></app-form> -->
+        <!-- <app-logic *ngIf="loaded && node.nodeType === 'Logic'" [info]='node' (next)="nodeNext($event)"></app-logic> -->
+        <!-- <app-interstitial *ngIf="loaded && node.nodeType === 'Interstitial'" [info]='node' (next)="nodeNext($event)"></app-interstitial> -->
+        <!-- <app-logic *ngIf="loaded && node.nodeType === 'Logic'" [info]='node' ></app-logic> -->
+        <!-- <app-interstitial *ngIf="loaded && node.nodeType === 'Interstitial'" [info]='node' ></app-interstitial> -->
+        <!-- <pre>{{node|json}}</pre> -->
+    <!-- <div *ngIf="article$ | async as article">
+
+        <h1>{{ article.name }}</h1>
+        <div *ngFor="let comment of article.nodes;">
+            {{ comment.section }}
+        </div>
+    </div> -->
+    <p>
+        {{(nodes | async)[0].question}}
+    </p>
+</section>

@@ -1,36 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
-import { SurveyService } from '../../services/survey.service';
+import { routerTransition } from './router.animations';
+import { SurveyService } from './state/survey.service';
+import { SurveyQuery } from './state/survey.query';
+import { Observable, of, EMPTY } from 'rxjs';
+import { Survey } from './state/survey.model';
+import { SurveyStore } from './state/survey.store';
+import { map, take, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
-  styleUrls: ['./survey.component.scss']
+  styleUrls: ['./survey.component.scss'],
+  animations: [routerTransition]
 })
 export class SurveyComponent implements OnInit {
+  getState(outlet) {
+    return outlet.activatedRouteData.state;
+  }
+
+  // surveys:any;
+  // loading$ = this.surveyQuery.selectLoading();
   // name: string;
-  surveys: any;
-  node: any;
+  node:any;
+  nodes = [];
   forwardToId:'';
   loaded = false;
   pastIds = [];
+  firstSurvey: Observable<Survey>;
+  surveys = this.surveyQuery.selectFirst().subscribe(obj => obj);
   constructor(
     // private router: ActivatedRoute,
     private surveyService: SurveyService,
+    private surveyStore: SurveyStore,
+    private surveyQuery: SurveyQuery
   ) { }
 
   ngOnInit(): void {
-    // this.router.queryParams.subscribe(params => {this.name = params['name'];});
 
-    this.surveyService.getSurveys().subscribe(surveys => {
-      this.surveys = surveys;
-      this.node = surveys[0].nodes[0];
-      this.loaded = true;
-    });
+    this.surveyService.getSurveys();
+    // this.surveys = this.surveyQuery.selectAll();
+    // this.surveys.pipe(observable => {
+    //   console.log(observable);
+    //   return observable
+    // }).subscribe(
+    //   res => {
+    //     // console.log(res);
+    //     // this.nodes = res[0].nodes;
+    //     // this.node = res[0].nodes[0];
+    //     this.loaded = true;
+    //   }
+    // );
+    this.firstSurvey = this.surveyQuery.selectFirst()//.pipe(switchMap(value => value !== undefined ? of(value) : EMPTY))
 
   }
 
   nodeNext(ev): void {
+
     this.forwardToId = '';
 
     if(this.node.nodeType === "Form"){
@@ -55,7 +80,7 @@ export class SurveyComponent implements OnInit {
       this.forwardToId = this.node.forwardToNodeDefault;
     }
 
-    let nextNode = this.surveys[0].nodes.find(node => {
+    let nextNode = this.nodes.find(node => {
       return node.id === this.forwardToId;
     })
 
@@ -69,8 +94,9 @@ export class SurveyComponent implements OnInit {
   }
   
   nodePrev(): void {
+
     const pastId = this.pastIds[this.pastIds.length-1];
-    let prevNode = this.surveys[0].nodes.find(node => {
+    let prevNode = this.nodes.find(node => {
       return node.id === pastId;
     })
 
@@ -82,5 +108,16 @@ export class SurveyComponent implements OnInit {
     }
 
   }
-
 }
+
+
+// selectDeviceTelemetry$: Subscription = new Subscription();
+
+// this.selectDeviceTelemetry$.add(
+//   this.deviceTelemetryQuery.selectEntity(commonName).pipe(
+//     filterNil, // Ignore empty initial observable emitted
+//     untilDestroyed(this) // Auto destroys during ngOnDestroy
+//    ).subscribe()
+// )
+
+// this.selectDeviceTelemetry$.unsubscribe();

@@ -87,6 +87,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "fwizapp"
+    }
+  },
+  "defaultProject": "fwizapp",
+  "cli": {
+    "defaultCollection": "@datorama/akita"
+  }
 }

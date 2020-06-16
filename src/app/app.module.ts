@@ -10,12 +10,9 @@ import { AppComponent } from './app.component';
 
 import { NotFound } from './components/notfound/notfound.component';
 import { HomeComponent } from './components/home/home.component';
-import { SurveyComponent } from './components/Survey/survey.component';
-import { FormComponent } from './components/survey/form/form.component';
-import { LogicComponent } from './components/survey/logic/logic.component';
-import { QuestionComponent } from './components/survey/question/question.component';
-import { InterstitialComponent } from './components/survey/interstitial/interstitial.component';
-import { MultipleChoiceComponent } from './components/survey/multiple-choice/multiple-choice.component';
+import { SurveyModule } from './components/survey/survey.module';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
 
 // import { environment } from '../environments/environment';
 
@@ -24,12 +21,7 @@ import { MultipleChoiceComponent } from './components/survey/multiple-choice/mul
     AppComponent,
     NotFound,
     HomeComponent,
-    SurveyComponent,
-    FormComponent,
-    LogicComponent,
-    MultipleChoiceComponent,
-    QuestionComponent,
-    InterstitialComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -37,6 +29,8 @@ import { MultipleChoiceComponent } from './components/survey/multiple-choice/mul
     HttpClientModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
+    // SurveyModule,
+    environment.production ? [] : AkitaNgDevtools
   ],
   providers: [],
   bootstrap: [AppComponent]
