@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from './router.animations';
 import { SurveyService } from './state/survey.service';
 import { SurveyQuery } from './state/survey.query';
-import { Observable, of, EMPTY } from 'rxjs';
-import { Survey } from './state/survey.model';
+import { Observable, of, EMPTY, Subscription } from 'rxjs';
+import { Survey, Node } from './state/survey.model';
 import { SurveyStore } from './state/survey.store';
 import { map, take, switchMap } from 'rxjs/operators';
+import { filterNil, arrayFind, arrayUpdate } from '@datorama/akita';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-survey',
@@ -14,46 +16,68 @@ import { map, take, switchMap } from 'rxjs/operators';
   animations: [routerTransition]
 })
 export class SurveyComponent implements OnInit {
-  getState(outlet) {
-    return outlet.activatedRouteData.state;
+  private subscriptions = new Subscription();
+  activeSurveyId: string;
+
+  getState() {
+    return (this.router.url === "/survey/quiz1") ? 'quiz1' : 'quiz2';
   }
 
   // surveys:any;
   // loading$ = this.surveyQuery.selectLoading();
   // name: string;
-  node:any;
-  nodes = [];
-  forwardToId:'';
+  node: Node;
+  nodes$: Observable<Node[]>;
+  nodes: Node[];
+  forwardToId:string;
   loaded = false;
   pastIds = [];
   firstSurvey: Observable<Survey>;
-  surveys = this.surveyQuery.selectFirst().subscribe(obj => obj);
+  selectLoading$: Observable<boolean>;
+
+  // surveys = this.surveyQuery.selectFirst().subscribe(obj => obj);
   constructor(
-    // private router: ActivatedRoute,
+    private router: Router,
+    // private route:ActivatedRoute,
     private surveyService: SurveyService,
     private surveyStore: SurveyStore,
     private surveyQuery: SurveyQuery
-  ) { }
-
+  ) {
+  }
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
   ngOnInit(): void {
 
     this.surveyService.getSurveys();
-    // this.surveys = this.surveyQuery.selectAll();
-    // this.surveys.pipe(observable => {
-    //   console.log(observable);
-    //   return observable
-    // }).subscribe(
-    //   res => {
-    //     // console.log(res);
-    //     // this.nodes = res[0].nodes;
-    //     // this.node = res[0].nodes[0];
-    //     this.loaded = true;
-    //   }
-    // );
-    this.firstSurvey = this.surveyQuery.selectFirst()//.pipe(switchMap(value => value !== undefined ? of(value) : EMPTY))
 
+    this.selectLoading$ = this.surveyQuery.selectLoading();
+    this.selectLoading$.subscribe(res => {
+      if(!res){
+        this.firstSurvey = this.surveyQuery.selectFirst();//.pipe(switchMap(value => value !== undefined ? of(value) : EMPTY))
+        this.firstSurvey.subscribe(obj => {
+          this.activeSurveyId = obj.id;
+          this.surveyStore.setActive(obj.id);
+          this.nodes$ = this.surveyQuery.selectEntity(obj.id, 'nodes');
+          this.nodes$.subscribe(res => {
+            this.nodes = res;
+          });
+          // this.nodes = this.surveyQuery.selectEntity(obj.id, ({ nodes }) => nodes);
+          this.nodes$.pipe(arrayFind(obj.nodeRootId)).subscribe(obj =>{
+            this.node = obj;
+          })
+          this.surveyStore.updateActiveQ(obj.nodeRootId);
+
+        })
+
+        this.loaded = true;
+      }
+    })
+    // this.nodes = this.surveyQuery.selectFirst();
   }
 
+
+  
   nodeNext(ev): void {
 
     this.forwardToId = '';
@@ -85,8 +109,18 @@ export class SurveyComponent implements OnInit {
     })
 
     if(nextNode && nextNode.nodeType){
+      // this.surveyStore.update(this.activeSurveyId, ({ nodes }) => ({
+      //   nodes: arrayUpdate(nodes, this.forwardToId, { active: true })
+      // }));
+      this.surveyStore.updateActiveQ(this.forwardToId );
       this.node = nextNode;
-      console.log(this.pastIds);
+      // console.log(this.pastIds);
+      if(this.router.url === "/survey/quiz1"){
+        this.router.navigate(['survey/quiz2']);
+      }else{
+        this.router.navigate(['survey/quiz1']);
+      }
+
     }else{
       console.log(nextNode);
     }
@@ -96,6 +130,12 @@ export class SurveyComponent implements OnInit {
   nodePrev(): void {
 
     const pastId = this.pastIds[this.pastIds.length-1];
+    this.surveyStore.updateActiveQ(pastId );
+    if(this.router.url === "/survey/quiz1"){
+      this.router.navigate(['survey/quiz2']);
+    }else{
+      this.router.navigate(['survey/quiz1']);
+    }
     let prevNode = this.nodes.find(node => {
       return node.id === pastId;
     })

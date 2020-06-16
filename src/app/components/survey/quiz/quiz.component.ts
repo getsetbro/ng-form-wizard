@@ -1,43 +1,67 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { SurveyService } from '../state/survey.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SurveyQuery } from '../state/survey.query';
-import { arrayFind } from '@datorama/akita';
-import { Survey } from '../state/survey.model';
-import { tap, map } from 'rxjs/operators';
+import { arrayFind, filterNil } from '@datorama/akita';
+import { Survey, Node } from '../state/survey.model';
+import { tap, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnInit,OnDestroy {
+  private subscriptions = new Subscription();
   // loading$ = this.surveyQuery.selectLoading();
   // node = this.surveyQuery.selectFirst();
   // survey$: any;
   // surveys = this.surveyQuery.selectAll();
-  active: any;
-  nodes: any;
+  active: Observable<Survey>;
+  activeQ$: any;
+  activeQ: string;
+
+  node: Observable<Node>;
+  nodes$: Observable<Node[]>;
+  nodes: Node[];
+  selectLoading$: Observable<boolean>;
+  loaded = false;
   constructor(
     // private router: ActivatedRoute,
     private surveyService: SurveyService, private surveyQuery: SurveyQuery
   ) { }
-
-  ngOnInit(): void {
-    // this.router.queryParams.subscribe(params => {this.name = params['name'];});
-    // this.loading$ = this.surveyQuery.selectLoading();
-    // this.node = this.surveyQuery.getAlll()
-    // this.surveyService.get().subscribe();
-    // this.node = this.surveyQuery.getCount();
-    // this.node = this.surveyQuery.select();
-    // this.node = this.surveyQuery.selectFirst();
-    // this.node = this.surveys$[0];
-    // if (this.surveyQuery.hasActive()) {
-    //   this.active = this.surveyQuery.selectActive();
-    //   this.nodes = this.surveyQuery.selectActive(({ nodes }) => nodes);
-    // }
-    this.nodes = this.surveyQuery.selectFirst().pipe(map(value => value.nodes))
-
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
+  ngOnInit(): void {
+      // this.nodes$ = this.surveyQuery.selectAll();
+      this.selectLoading$ = this.surveyQuery.selectLoading();
+      this.subscriptions.add(
+        this.selectLoading$.subscribe(res => {this.goTime(res)})
+      )
+    }
+   
+    goTime(res){
+      if(!res){
+        const activeId = this.surveyQuery.getActive();
+        this.nodes$ = this.surveyQuery.selectEntity(activeId.id, 'nodes');
+        this.subscriptions.add(
+          this.nodes$.subscribe(res => {this.nodes = res;})
+        )
+        this.activeQ$ = this.surveyQuery.selectActiveQ$;
+        this.subscriptions.add(
+          this.activeQ$.pipe(filterNil).subscribe(res => {
+            this.activeQ = res;
+            console.log(this.activeQ);
+
+          })
+        )
+
+        this.node = this.surveyQuery.selectEntity(activeId.id, 'nodes').pipe(arrayFind(this.activeQ));
+        console.log(this.activeQ);
+        this.loaded = true;
+
+      }
+    }
 
 }

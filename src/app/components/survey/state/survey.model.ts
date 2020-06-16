@@ -8,25 +8,27 @@ export interface Survey {
   cssPath: string;
   version: number;
   locale: string;
-  nodes: [
-    {
-      id: string;
-      name: string;
-      description: string;
-      nodeRootId: string;
-      templateId: string;
-      templateVars: {};
-      cssPath: string;
-      version: number;
-      locale: string;
-      nodes: [{
-        question: string;
-        submit: {
-          forwardToNode: string;
-        }
-      }]
-    }
-  ];
+  nodes: Node[];
+}
+export interface Node {
+  id: string;
+  name: string;
+  description: string;
+  nodeRootId: string;
+  templateId: string;
+  templateVars: {};
+  cssPath: string;
+  version: number;
+  locale: string;
+  nodeType:string;
+  forwardToNode?:string;
+  forwardToNodeDefault?:string;
+  submit?:{
+    text:string;
+    forwardToNode:string;
+  };
+  answers?:[{forwardToNode:string}]
+  rules?:[]
 }
 export function createSurvey(params: Partial<Survey>) {
   return {} as Survey;

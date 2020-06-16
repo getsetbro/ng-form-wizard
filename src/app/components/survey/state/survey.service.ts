@@ -24,7 +24,7 @@ export class SurveyService {
   // }
   getSurveys() {
     return this.http.get<Survey[]>('http://localhost:3000/surveys').subscribe(entities => {
-      this.surveyStore.set(entities);
+      this.surveyStore.set(entities, {activeId: entities[0].id});
     });
   }
   

@@ -7,7 +7,10 @@ import { SurveyComponent } from './survey.component';
 const routes: Routes = [
   {
     path: '', component: SurveyComponent, data: { state: 'survey' },
-    children: [{ path: 'quiz', component: QuizComponent, data: { state: 'quiz' } }]
+    children: [
+      { path: 'quiz1', component: QuizComponent },
+      { path: 'quiz2', component: QuizComponent },
+    ]
   }
 ];
 

@@ -1,12 +1,13 @@
 <h1>survey</h1>
-<!-- <pre>{{node |json}}</pre> -->
-<!-- <p>{{  loading$ | async }}</p> -->
-<p>{{(firstSurvey | async).id}}</p>
+<!-- <p>{{(firstSurvey | async)?.id}}</p> -->
 <!-- <p *ngFor="let item of surveys | async">{{ item.name }}</p> -->
-<main [@routerTransition]="getState(o)">
-  <router-outlet #o="outlet"></router-outlet>
+<main [@routerTransition]="getState()">
+  <router-outlet></router-outlet>
 </main>
 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodePrev()">back</button>
-&nbsp;
+<!-- &nbsp;
 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodeNext(null)"
-    *ngIf="loaded && node.nodeType !== 'Interstitial' && node.nodeType !== 'Logic'">next</button>
+    *ngIf="loaded && node.nodeType !== 'Interstitial' && node.nodeType !== 'Logic'">next</button> -->
+    &nbsp;
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodeNext(null)"
+        *ngIf="loaded">next</button>
