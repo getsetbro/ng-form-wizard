@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { SurveyStore } from '../state/survey.store';
-import { Router } from '@angular/router';
-import { SurveyService } from '../state/survey.service';
+import { NodeService } from '../state/node.service';
+import { NodeStore } from '../state/node.store';
 
 @Component({
   selector: 'app-interstitial',
@@ -15,16 +14,16 @@ export class InterstitialComponent implements OnInit {
   forwardToId: string;
 
   constructor(
-    private router: Router,
-    private surveyService: SurveyService,
+    private nodeService: NodeService,
+    private nodeStore: NodeStore,
     ) { }
 
   ngOnInit(): void {
-    let that = this;
     this.forwardToId = '';
     this.forwardToId = this.info.forwardToNode;
+    let that = this;
     setTimeout(function(){
-      // that.surveyService.updateActiveQ(that.forwardToId );
+      that.nodeStore.setActive(that.forwardToId);
     }, 2000);
   }
 

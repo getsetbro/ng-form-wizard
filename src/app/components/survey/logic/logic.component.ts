@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
-import { SurveyStore } from '../state/survey.store';
-import { SurveyService } from '../state/survey.service';
+import { NodeService } from '../state/node.service';
+import { NodeStore } from '../state/node.store';
 
 @Component({
   selector: 'app-logic',
@@ -14,16 +13,16 @@ export class LogicComponent implements OnInit {
   forwardToId: any;
 
   constructor(
-    private router: Router,
-    private surveyService: SurveyService,
+    private nodeService: NodeService,
+    private nodeStore: NodeStore,
     ) { }
 
   ngOnInit(): void {
-    let that = this;
     this.forwardToId = '';
     this.forwardToId = this.info.rules[0].forwardToNode;
+    let that = this;
     setTimeout(function(){
-      // that.surveyService.updateActiveQ(that.forwardToId );
+      that.nodeStore.setActive(that.forwardToId);
     }, 300);
   }
 }

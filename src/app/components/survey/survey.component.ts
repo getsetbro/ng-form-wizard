@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SurveyService } from './state/survey.service';
-import { SurveyQuery } from './state/survey.query';
 import { Observable, of, EMPTY, Subscription } from 'rxjs';
-import { Survey, Node } from './state/survey.model';
-import { SurveyStore } from './state/survey.store';
-import { map, take, switchMap, first } from 'rxjs/operators';
-import { filterNil, arrayFind, arrayUpdate } from '@datorama/akita';
-import { Router, ActivatedRoute } from '@angular/router';
 import { NodeService } from './state/node.service';
+import { NodeStore } from './state/node.store';
+import { NodeQuery } from './state/node.query';
 
 @Component({
   selector: 'app-survey',
@@ -17,14 +12,12 @@ import { NodeService } from './state/node.service';
 export class SurveyComponent implements OnInit {
   private subscriptions = new Subscription();
 
-  loading$ = false;
-  surveys: any;
-  survey: any;
-  question: any;
-  activeQuestionId: string;
-  activeEntity$:any;
+  isLoading$ = this.nodeQuery.selectLoading();
+  question$ = this.nodeQuery.selectActive();
+
   constructor(
     private nodeService: NodeService,
+    private nodeQuery: NodeQuery,
   ) {}
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -32,7 +25,7 @@ export class SurveyComponent implements OnInit {
   ngOnInit(): void {
     this.nodeService.get();
 
-    this.loading$ = true;
+    const firstTodo$ = this.nodeQuery.getActive();
 
   }
 

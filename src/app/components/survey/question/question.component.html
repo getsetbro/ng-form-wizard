@@ -1,8 +1,8 @@
 <p>question</p>
-<ng-container  *ngIf="info | async as nodeObj; else loadingTpl">
+<ng-container *ngIf="info; else loadingTpl">
 
-<h1>{{nodeObj.question}}</h1>
-<div *ngFor="let a of nodeObj.answers">
+<h1>{{info.question}}</h1>
+<div *ngFor="let a of info.answers">
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{a.text}}</button>
 </div>
 <hr>

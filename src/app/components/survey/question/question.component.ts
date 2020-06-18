@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SurveyService } from '../state/survey.service';
-import { SurveyQuery } from '../state/survey.query';
-import { filterNil } from '@datorama/akita';
+import { NodeService } from '../state/node.service';
+import { NodeStore } from '../state/node.store';
 
 @Component({
   selector: 'app-question',
@@ -12,10 +11,9 @@ import { filterNil } from '@datorama/akita';
 export class QuestionComponent implements OnInit {
   @Input() info: any;
   private subscriptions = new Subscription();
-  lastNodeId$ = this.surveyQuery.selectLastNodeId$;
   constructor(
-    private surveyService: SurveyService,
-    private surveyQuery: SurveyQuery
+    private nodeService: NodeService,
+    private nodeStore: NodeStore,
   ) {}
   ngOnDestroy() {this.subscriptions.unsubscribe();}
   ngOnInit(): void {}
@@ -29,14 +27,12 @@ export class QuestionComponent implements OnInit {
   }
   nodeNext(): void {
 
-    this.info.subscribe(obj => {
-      const forwardToNode = obj.answers[0].forwardToNode;
-      if (obj && obj.nodeType && forwardToNode !== '00000000-0000-0000-0000-000000000000') {
-        // this.surveyService.updateActiveQ(forwardToNode);
-      }else{
-        console.log(obj);
-      }
-    })
+    const forwardToNode = this.info.answers[0].forwardToNode;
+    if (this.info.nodeType && forwardToNode !== '00000000-0000-0000-0000-000000000000') {
+      this.nodeStore.setActive(forwardToNode);
+    }else{
+      console.log(this.info);
+    }
 
   }
 }

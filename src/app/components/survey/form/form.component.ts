@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { SurveyService } from '../state/survey.service';
-import { SurveyQuery } from '../state/survey.query';
 import { Subscription } from 'rxjs';
 import { filterNil } from '@datorama/akita';
+import { NodeService } from '../state/node.service';
+import { NodeStore } from '../state/node.store';
+import { NodeQuery } from '../state/node.query';
 
 @Component({
   selector: 'app-form',
@@ -12,32 +13,28 @@ import { filterNil } from '@datorama/akita';
 export class FormComponent implements OnInit, OnDestroy {
   @Input() info: any;
   private subscriptions = new Subscription();
-  // lastNodeId$ = this.surveyQuery.selectLastNodeId$;
+
   constructor(
-    private surveyService: SurveyService,
-    private surveyQuery: SurveyQuery
+    private nodeService: NodeService,
+    private nodeStore: NodeStore,
+    private nodeQuery: NodeQuery,
   ) {}
   ngOnDestroy() {this.subscriptions.unsubscribe();}
   ngOnInit(): void {}
   nodePrev(): void {
     // this.subscriptions.add(
-    //   this.lastNodeId$.subscribe(o => {
-    //     this.surveyService.updateActiveQ(o);
-    //     this.surveyService.removePastNode();
-    //   })
+
+    
     // )
   }
   nodeNext(): void {
 
-    this.info.pipe(filterNil).subscribe(obj => {
-      const forwardToNode = obj.submit.forwardToNode;
-      if (obj && obj.nodeType && forwardToNode !== '00000000-0000-0000-0000-000000000000') {
-        // this.surveyService.addPastNode(obj.id);
-        // this.surveyService.updateActiveQ(forwardToNode);
+      const forwardToNode = this.info.submit.forwardToNode;
+      if (this.info.nodeType && forwardToNode !== '00000000-0000-0000-0000-000000000000') {
+        this.nodeStore.setActive(forwardToNode);
       }else{
-        console.log(obj);
+        console.log(this.info);
       }
-    })
 
   }
 }
