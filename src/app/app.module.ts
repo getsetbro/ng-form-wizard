@@ -10,9 +10,15 @@ import { AppComponent } from './app.component';
 
 import { NotFound } from './components/notfound/notfound.component';
 import { HomeComponent } from './components/home/home.component';
-import { SurveyModule } from './components/survey/survey.module';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
+import { SurveyComponent } from './components/survey/survey.component';
+import { CommonModule } from '@angular/common';
+import { LogicComponent } from './components/survey/logic/logic.component';
+import { FormComponent } from './components/survey/form/form.component';
+import { InterstitialComponent } from './components/survey/interstitial/interstitial.component';
+import { MultipleChoiceComponent } from './components/survey/multiple-choice/multiple-choice.component';
+import { QuestionComponent } from './components/survey/question/question.component';
 
 // import { environment } from '../environments/environment';
 
@@ -21,15 +27,20 @@ import { environment } from '../environments/environment';
     AppComponent,
     NotFound,
     HomeComponent,
-
+SurveyComponent,
+LogicComponent,
+FormComponent,
+InterstitialComponent,
+MultipleChoiceComponent,
+QuestionComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
-    // SurveyModule,
     environment.production ? [] : AkitaNgDevtools
   ],
   providers: [],

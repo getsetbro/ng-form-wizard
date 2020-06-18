@@ -11,16 +11,8 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'home'
   },
-  {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path: 'survey',
-    loadChildren: () => import('./components/survey/survey.module').then(m => m.SurveyModule)
-    // component: SurveyComponent
-    // , data: { state: 'survey' }
-  },
+  { path: 'home',component: HomeComponent},
+  { path: 'survey',component: SurveyComponent},
   { path: '**', component: NotFound }
 ];
 

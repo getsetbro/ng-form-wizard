@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { SurveyStore } from '../state/survey.store';
+import { SurveyService } from '../state/survey.service';
 
 @Component({
   selector: 'app-logic',
@@ -10,30 +11,19 @@ import { SurveyStore } from '../state/survey.store';
 export class LogicComponent implements OnInit {
   @Input()
   info: any;
-  @Output() next: EventEmitter<any> = new EventEmitter();
-  forwardToId: string;
+  forwardToId: any;
 
   constructor(
     private router: Router,
-    private surveyStore: SurveyStore,
+    private surveyService: SurveyService,
     ) { }
 
   ngOnInit(): void {
     let that = this;
     this.forwardToId = '';
-
-    this.forwardToId = this.info.forwardToNodeDefault;
-
-    this.surveyStore.updateActiveQ(this.forwardToId );
-
+    this.forwardToId = this.info.rules[0].forwardToNode;
     setTimeout(function(){
-
-      // console.log(this.pastIds);
-      if(that.router.url === "/survey/quiz1"){
-        that.router.navigate(['survey/quiz2']);
-      }else{
-        that.router.navigate(['survey/quiz1']);
-      }
-    }, 0);
+      // that.surveyService.updateActiveQ(that.forwardToId );
+    }, 300);
   }
 }
