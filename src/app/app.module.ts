@@ -19,6 +19,8 @@ import { FormComponent } from './components/survey/form/form.component';
 import { InterstitialComponent } from './components/survey/interstitial/interstitial.component';
 import { MultipleChoiceComponent } from './components/survey/multiple-choice/multiple-choice.component';
 import { QuestionComponent } from './components/survey/question/question.component';
+import { LiteHeaderComponent } from './components/lite-header/lite-header.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 // import { environment } from '../environments/environment';
 
@@ -32,7 +34,9 @@ LogicComponent,
 FormComponent,
 InterstitialComponent,
 MultipleChoiceComponent,
-QuestionComponent
+QuestionComponent,
+LiteHeaderComponent,
+ProgressBarComponent
   ],
   imports: [
     CommonModule,

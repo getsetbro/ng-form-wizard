@@ -1,9 +1,7 @@
-<h1>survey</h1>
 
 <ng-container *ngIf="!(isLoading$ | async); else loadingTpl">
-
   <section *ngIf="(question$ | async) as question">
-      <h1>{{question.nodeType}}</h1>
+    <app-progress-bar></app-progress-bar>
       <app-form *ngIf="question.nodeType === 'Form'" [info]='question'></app-form>
       <app-logic *ngIf="question.nodeType === 'Logic'" [info]='question'></app-logic>
       <app-question *ngIf="question.nodeType === 'Question'" [info]='question'></app-question>
@@ -14,6 +12,7 @@
 </ng-container>
 
 <ng-template #loadingTpl>
-  <h1>loading...</h1>
-  <pre>{{(question$ | async | json)}}</pre>
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.6)" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+  </ngx-spinner>
 </ng-template>

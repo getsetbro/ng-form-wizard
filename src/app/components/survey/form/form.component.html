@@ -1,12 +1,27 @@
-<p>form</p>
 <ng-container *ngIf="info; else loadingTpl">
+  <div class="container mx-auto">
+    <section class="flex justify-between items-center h-16">
+      <div class="flex-1">
+        <button class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded" (click)="nodePrev()">&lt;</button>
+      </div>
+      <div class="flex-1 text-center">{{info.section}}</div>
+      <div class="flex-1 text-right">
+        <button class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded">Start Over</button>
+      </div>
+    </section>
+    <section class="text-center">
     <div *ngFor="let f of info.nodeTemplateForm">
-        <input class="bg-white border border-gray-300 rounded-lg py-2 px-4 appearance-none leading-normal" *ngIf="f.type === 'Input'" type="text" [placeholder]="f.placeholder" />
+      <input class="bg-white border border-gray-300 rounded-lg py-2 px-4 appearance-none leading-normal"
+        *ngIf="f.type === 'Input'" type="text" [placeholder]="f.placeholder" />
     </div>
-    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{info.submit.text}}</button>
-    <hr>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodePrev()">back</button>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodeNext()">next</button>
+    <button type="button"
+      class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">{{info.submit.text}}</button>
+
+
+    <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+      (click)="nodeNext()">next</button>
+    </section>
+  </div>
 </ng-container>
 
 <ng-template #loadingTpl>

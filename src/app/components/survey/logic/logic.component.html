@@ -1,2 +1,11 @@
-<p>logic</p>
-<h1>{{info.rules[0].attribute}}</h1>
+
+<ng-container *ngIf="info">
+    <div class="container mx-auto">
+        <section class="flex justify-between items-center h-16">
+            <div></div>
+        </section>
+        <section class="text-center">
+            <h1>{{info.rules[0].attribute}}</h1>
+        </section>
+    </div>
+</ng-container>

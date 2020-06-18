@@ -1,13 +1,22 @@
-<p>question</p>
 <ng-container *ngIf="info; else loadingTpl">
-
-<h1>{{info.question}}</h1>
-<div *ngFor="let a of info.answers">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{a.text}}</button>
-</div>
-<hr>
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodePrev()">back</button>
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="nodeNext()">next</button>
+  <div class="container mx-auto">
+    <section class="flex items-center h-16">
+      <div class="flex-1">
+        <button class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded" (click)="nodePrev()">&lt;</button>
+      </div>
+      <div class="flex-1 text-center">{{info.section}}</div>
+      <div class="flex-1 text-right">
+        <button class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded">Start Over</button>
+      </div>
+    </section>
+    <section class="text-center">
+      <h1>{{info.question}}</h1>
+      <div *ngFor="let a of info.answers">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">{{a.text}}</button>
+      </div>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded" (click)="nodeNext()">next</button>
+    </section>
+  </div>
 </ng-container>
 
 <ng-template #loadingTpl>
